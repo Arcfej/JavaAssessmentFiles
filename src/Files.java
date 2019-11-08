@@ -19,8 +19,11 @@ public class Files {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Files files = new Files();
+		files.runFilesTest();
 	}
 
+	public void runFilesTest() {
+		System.out.println("Running file tests....");
+	}
 }
