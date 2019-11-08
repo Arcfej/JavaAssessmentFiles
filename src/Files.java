@@ -39,8 +39,10 @@ public class Files {
 	 */
 	public void runFilesTest(Scanner in) {
 		String text = askForFile(in);
-		System.out.println("The content of the file:");
-		System.out.println(text);
+		if (text != null) {
+			System.out.println("The content of the file:");
+			System.out.println(text);
+		}
 	}
 	
 	/**
@@ -62,7 +64,7 @@ public class Files {
 	 * @return the content of that file in a String.
 	 */
 	public String loadTextFile(String fileName) {
-		String file = "";
+		String file = null;
 		BufferedReader bufferedReader = null;
 		
 		// Try to read every line of the file
@@ -78,7 +80,7 @@ public class Files {
 			System.out.println("File not found: " + e.getMessage());
 		} catch (IOException e) {
 			System.out.println("Error during reading the file: " + e.getMessage());
-			file = "";
+			file = null;
 		}
 		
 		// Close reader
