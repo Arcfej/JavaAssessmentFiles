@@ -39,7 +39,7 @@ public class Files {
 	 */
 	public void runFilesTest(Scanner in) {
 		String text = askForFile(in);
-		if (text != null) {
+		if (!text.isEmpty()) {
 			System.out.println("The content of the file:");
 			System.out.println(text);
 		}
@@ -64,7 +64,7 @@ public class Files {
 	 * @return the content of that file in a String.
 	 */
 	public String loadTextFile(String fileName) {
-		String file = null;
+		String file = "";
 		BufferedReader bufferedReader = null;
 		
 		// Try to read every line of the file
