@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -38,11 +35,15 @@ public class Files {
 	 * Test how the Files class works.
 	 */
 	public void runFilesTest(Scanner in) {
-		String text = askForFile(in);
-		if (!text.isEmpty()) {
-			System.out.println("The content of the file:");
-			System.out.println(text);
-		}
+//	    // Read files
+//		String text = askForFile(in);
+//		if (!text.isEmpty()) {
+//			System.out.println("The content of the file:");
+//			System.out.println(text);
+//		}
+
+        // Write to files
+        writeToFile(in);
 	}
 	
 	/**
@@ -95,5 +96,24 @@ public class Files {
 		}
 		
 		return file;
+	}
+
+	public void writeToFile(Scanner in) {
+		final String USER_INPUT_FILE_PATH = "input.txt";
+		PrintWriter writer = null;
+		File file = new File(USER_INPUT_FILE_PATH);
+		try {
+			writer = new PrintWriter(new FileOutputStream(USER_INPUT_FILE_PATH));
+			while (true) {
+				System.out.println("Please input the next line of the file. In case an empty line the file will be saved.");
+				String line = in.nextLine();
+				if (line.isEmpty()) break;
+				writer.println(line);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		} finally {
+			if (writer != null) writer.close();
+		}
 	}
 }
