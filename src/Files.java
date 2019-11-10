@@ -87,13 +87,12 @@ public class Files {
 		
 		// Close reader
 		finally {
-			// TODO swap if and try order
-			try {
-				if (bufferedReader != null) {
+			if (bufferedReader != null) {
+				try {
 					bufferedReader.close();
+				} catch (IOException e) {
+					System.out.println("Error closing file: " + e.getMessage());
 				}
-			} catch (IOException e) {
-				System.out.println("Error closing file: " + e.getMessage());
 			}
 		}
 		
