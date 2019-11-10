@@ -98,12 +98,19 @@ public class Files {
 		return file;
 	}
 
+	/**
+	 * Ask for lines from the user and save them in a txt file.
+	 *
+	 * @param in the input stream through the user type in their texts.
+	 */
 	public void writeToFile(Scanner in) {
 		final String USER_INPUT_FILE_PATH = "input.txt";
 		PrintWriter writer = null;
-		File file = new File(USER_INPUT_FILE_PATH);
+
+		// Try open or create a new file for writing
 		try {
 			writer = new PrintWriter(new FileOutputStream(USER_INPUT_FILE_PATH));
+			// Prompt the user to write line by line until they enter an empty line
 			while (true) {
 				System.out.println("Please input the next line of the file. In case an empty line the file will be saved.");
 				String line = in.nextLine();
