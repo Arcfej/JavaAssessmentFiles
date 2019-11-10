@@ -2,10 +2,6 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * 
- */
-
-/**
  * This class handles the file readings and writings of a program.
  * 
  * @author MiklosMayer
@@ -16,12 +12,14 @@ public class Files {
 	/**
 	 * Basic constructor.
 	 */
-	public Files() {
+    private Files() {
 
 	}
 
 	/**
-	 * @param args
+     * Entry point of the application
+     *
+	 * @param args Starter arguments for running the program
 	 */
 	public static void main(String[] args) {
 		Files files = new Files();
@@ -34,7 +32,7 @@ public class Files {
 	/**
 	 * Test how the Files class works.
 	 */
-	public void runFilesTest(Scanner in) {
+    private void runFilesTest(Scanner in) {
 //	    // Read files
 //		String text = askForFile(in);
 //		if (!text.isEmpty()) {
@@ -64,7 +62,7 @@ public class Files {
 	 * @param fileName The name of the file to be loaded.
 	 * @return the content of that file in a String.
 	 */
-	public String loadTextFile(String fileName) {
+    private String loadTextFile(String fileName) {
 		String file = "";
 		BufferedReader bufferedReader = null;
 		
@@ -103,24 +101,20 @@ public class Files {
 	 *
 	 * @param in the input stream through the user type in their texts.
 	 */
-	public void writeToFile(Scanner in) {
+    private void writeToFile(Scanner in) {
 		final String USER_INPUT_FILE_PATH = "input.txt";
-		PrintWriter writer = null;
 
-		// Try open or create a new file for writing
-		try {
-			writer = new PrintWriter(new FileOutputStream(USER_INPUT_FILE_PATH));
-			// Prompt the user to write line by line until they enter an empty line
-			System.out.println("Please input the lines of the file. In case of an empty line the file will be saved.");
-			while (true) {
-				String line = in.nextLine();
-				if (line.isEmpty()) break;
-				writer.println(line);
-			}
-		} catch (FileNotFoundException | SecurityException e) {
-			System.out.println("Access denied: " + e.getMessage());
-		} finally {
-			if (writer != null) writer.close();
-		}
+        // Try open or create a new file for writing
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(USER_INPUT_FILE_PATH))) {
+            // Prompt the user to write line by line until they enter an empty line
+            System.out.println("Please input the lines of the file. In case of an empty line the file will be saved.");
+            while (true) {
+                String line = in.nextLine();
+                if (line.isEmpty()) break;
+                writer.println(line);
+            }
+        } catch (FileNotFoundException | SecurityException e) {
+            System.out.println("Access denied: " + e.getMessage());
+        }
 	}
 }
