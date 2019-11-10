@@ -10,6 +10,12 @@ import java.util.Scanner;
 public class Files {
 
 	/**
+	 * Constants used by the decipherFile() method.
+	 */
+	private static final String crypt1 = "cipherabdfgjk";
+	private static final String crypt2 = "lmnoqstuvwxyz";
+
+	/**
 	 * Basic constructor.
 	 */
     private Files() {
@@ -43,8 +49,11 @@ public class Files {
 //        // Write to files
 //        writeToFile(in);
 
-		// Copy files
-		copyFile(in);
+//		// Copy files
+//		copyFile(in);
+
+		// Decipher file
+		decipherFile();
 	}
 	
 	/**
@@ -163,5 +172,71 @@ public class Files {
 			}
 			if (to != null) to.close();
 		}
+	}
+
+	private void decipherFile() {
+		BufferedReader mystery = null;
+		PrintWriter deciphered = null;
+
+		try {
+			mystery = new BufferedReader(new FileReader("mystery.txt"));
+			deciphered = new PrintWriter("deciphered.txt");
+			while (mystery.ready()) {
+				String newLine = mystery.readLine();
+				String decipheredLine = cipherDecipherString(newLine);
+				System.out.println(decipheredLine);
+				deciphered.println(decipheredLine);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("File cannot be opened, read or written to: " + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Error during reading the file: " + e.getMessage());
+		} finally {
+			if (mystery != null) {
+				try {
+					mystery.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (deciphered != null) {
+				deciphered.close();
+			}
+		}
+	}
+
+	/**
+	 * Method to encipher and decipher a given String using parallel arrays (crypt1 & crypt2)
+	 *
+	 * @param text A String containing text that is to be enciphered or deciphered
+	 * @return A new String containing the result, e.g. the en/deciphered version of the String provided as an input
+	 */
+	private static String cipherDecipherString(String text)
+	{
+		// declare variables we need
+		int i, j;
+		boolean found = false;
+		String temp="" ; // empty String to hold converted text
+
+		for (i = 0; i < text.length(); i++) // look at every character in text
+		{
+			found = false;
+			if ((j = crypt1.indexOf(text.charAt(i))) > -1) // is char in crypt1?
+			{
+				found = true; // yes!
+				temp = temp + crypt2.charAt(j); // add the cipher character to temp
+			}
+			else if ((j = crypt2.indexOf(text.charAt(i))) > -1) // and so on
+			{
+				found = true;
+				temp = temp + crypt1.charAt(j);
+			}
+
+			if (! found) // to deal with cases where char is NOT in crypt2 or 2
+			{
+				temp = temp + text.charAt(i); // just copy across the character
+			}
+		}
+		return temp;
 	}
 }
