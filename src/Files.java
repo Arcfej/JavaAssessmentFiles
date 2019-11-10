@@ -111,8 +111,8 @@ public class Files {
 		try {
 			writer = new PrintWriter(new FileOutputStream(USER_INPUT_FILE_PATH));
 			// Prompt the user to write line by line until they enter an empty line
+			System.out.println("Please input the lines of the file. In case of an empty line the file will be saved.");
 			while (true) {
-				System.out.println("Please input the next line of the file. In case an empty line the file will be saved.");
 				String line = in.nextLine();
 				if (line.isEmpty()) break;
 				writer.println(line);
