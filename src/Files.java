@@ -226,7 +226,7 @@ public class Files {
 		// declare variables we need
 		int i, j;
 		boolean found = false;
-		String temp="" ; // empty String to hold converted text
+		StringBuilder temp = new StringBuilder(); // empty String to hold converted text
 
 		for (i = 0; i < text.length(); i++) // look at every character in text
 		{
@@ -234,19 +234,19 @@ public class Files {
 			if ((j = crypt1.indexOf(text.charAt(i))) > -1) // is char in crypt1?
 			{
 				found = true; // yes!
-				temp = temp + crypt2.charAt(j); // add the cipher character to temp
+				temp.append(crypt2.charAt(j)); // add the cipher character to temp
 			}
 			else if ((j = crypt2.indexOf(text.charAt(i))) > -1) // and so on
 			{
 				found = true;
-				temp = temp + crypt1.charAt(j);
+				temp.append(crypt1.charAt(j));
 			}
 
 			if (! found) // to deal with cases where char is NOT in crypt2 or 2
 			{
-				temp = temp + text.charAt(i); // just copy across the character
+				temp.append(text.charAt(i)); // just copy across the character
 			}
 		}
-		return temp;
+		return temp.toString();
 	}
 }
