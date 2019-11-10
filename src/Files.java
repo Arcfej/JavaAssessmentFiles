@@ -62,7 +62,7 @@ public class Files {
 	 * @param in the scanner through which the user type in their input.
 	 * @return the content of the file the user asked for.
 	 */
-	public String askForFile(Scanner in) {
+	private String askForFile(Scanner in) {
 		System.out.println("Which text file would you like to open?");
 		// Load the file with the given filename and return it.
 		return loadTextFile(in.next());
