@@ -174,6 +174,9 @@ public class Files {
 		}
 	}
 
+	/**
+	 * Decipher the mystery.txt file into deciphered.txt.
+	 */
 	private void decipherFile() {
 		BufferedReader mystery = null;
 		PrintWriter deciphered = null;
@@ -181,17 +184,24 @@ public class Files {
 		try {
 			mystery = new BufferedReader(new FileReader("mystery.txt"));
 			deciphered = new PrintWriter("deciphered.txt");
+			// Decipher and print the file line by line
 			while (mystery.ready()) {
 				String newLine = mystery.readLine();
 				String decipheredLine = cipherDecipherString(newLine);
 				System.out.println(decipheredLine);
 				deciphered.println(decipheredLine);
 			}
-		} catch (FileNotFoundException e) {
+		}
+
+		// Catch the errors
+		catch (FileNotFoundException e) {
 			System.out.println("File cannot be opened, read or written to: " + e.getMessage());
 		} catch (IOException e) {
 			System.out.println("Error during reading the file: " + e.getMessage());
-		} finally {
+		}
+
+		// Close the files.
+		finally {
 			if (mystery != null) {
 				try {
 					mystery.close();
