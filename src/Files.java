@@ -122,6 +122,11 @@ public class Files {
         }
 	}
 
+	/**
+	 * Get two filenames from the user and copy one of them into the other.
+	 *
+	 * @param in the input stream the user type in the filenames.
+	 */
 	private void copyFile(Scanner in) {
     	BufferedReader from = null;
     	PrintWriter to = null;
@@ -139,11 +144,17 @@ public class Files {
 				System.out.println(line);
 				to.println(line);
 			}
-		} catch (FileNotFoundException e) {
+		}
+
+		// Catch the errors
+		catch (FileNotFoundException e) {
 			System.out.println("File cannot be opened, read or written to: " + e.getMessage());
 		} catch (IOException e) {
 			System.out.println("Error during reading the file: " + e.getMessage());
-		} finally {
+		}
+
+		// Close the files
+		finally {
 			if (from != null) {
 				try {
 					from.close();
