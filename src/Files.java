@@ -117,8 +117,8 @@ public class Files {
 				if (line.isEmpty()) break;
 				writer.println(line);
 			}
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found");
+		} catch (FileNotFoundException | SecurityException e) {
+			System.out.println("Access denied: " + e.getMessage());
 		} finally {
 			if (writer != null) writer.close();
 		}
