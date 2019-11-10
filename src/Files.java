@@ -40,8 +40,11 @@ public class Files {
 //			System.out.println(text);
 //		}
 
-        // Write to files
-        writeToFile(in);
+//        // Write to files
+//        writeToFile(in);
+
+		// Copy files
+		copyFile(in);
 	}
 	
 	/**
@@ -84,6 +87,7 @@ public class Files {
 		
 		// Close reader
 		finally {
+			// TODO swap if and try order
 			try {
 				if (bufferedReader != null) {
 					bufferedReader.close();
@@ -116,5 +120,38 @@ public class Files {
         } catch (FileNotFoundException | SecurityException e) {
             System.out.println("Access denied: " + e.getMessage());
         }
+	}
+
+	private void copyFile(Scanner in) {
+    	BufferedReader from = null;
+    	PrintWriter to = null;
+		try {
+			// Get the filenames from the user.
+			System.out.println("Which file do you like to copy?");
+			from = new BufferedReader(new FileReader(in.next()));
+			System.out.println("What should be the filename of the new copy?");
+			to = new PrintWriter(in.next());
+
+			// Read every lines from the original file and display them to the user
+			// while writing them to the new file.
+			while (from.ready()) {
+				String line = from.readLine();
+				System.out.println(line);
+				to.println(line);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("File cannot be opened, read or written to: " + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Error during reading the file: " + e.getMessage());
+		} finally {
+			if (from != null) {
+				try {
+					from.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (to != null) to.close();
+		}
 	}
 }
