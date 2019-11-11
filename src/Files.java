@@ -52,8 +52,11 @@ public class Files {
 //		// Copy files
 //		copyFile(in);
 
-		// Decipher file
-		decipherFile();
+//		// Decipher file
+//		decipherFile();
+
+		// Calculate competitor's average scores:
+		processingScores();
 	}
 	
 	/**
@@ -248,5 +251,49 @@ public class Files {
 			}
 		}
 		return temp.toString();
+	}
+
+	private void processingScores() {
+		BufferedReader scores = null;
+		PrintWriter avereges = null;
+
+		try {
+			scores = new BufferedReader(new FileReader("details.txt"));
+			avereges = new PrintWriter("averages.txt");
+			while (scores.ready()) {
+				String[] candidate = scores.readLine().split(" ");
+				String firstName = candidate[0];
+				String lastName = candidate[1];
+				int total = 0;
+				for (int i = 2; i < candidate.length; i++) {
+					total += Integer.parseInt(candidate[i]);
+				}
+				float average = (float) total / (candidate.length - 2);
+				// Example: Bush, Mildred: Average score is x.xx.
+				String out = String.format("%1s, %2s: Average score is %3.2f.", lastName, firstName, average);
+				// Write to screen and output file
+				System.out.println(out);
+				avereges.println(out);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("File is not exist or cannot be opened: " + e.getMessage());
+		} catch (SecurityException e) {
+			System.out.println("Access denied: " + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Error while file reading: " + e.getMessage());
+		} catch (NumberFormatException e) {
+			System.out.println("Error with parsing integer: " + e.getMessage());
+		} finally {
+			if (scores != null) {
+				try {
+					scores.close();
+				} catch (IOException e) {
+					System.out.println("Error while closing file: " + e.getMessage());
+				}
+			}
+			if (avereges != null) {
+				avereges.close();
+			}
+		}
 	}
 }
