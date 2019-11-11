@@ -253,13 +253,20 @@ public class Files {
 		return temp.toString();
 	}
 
+	/**
+	 * Read the scores of the competition candidates from details.txt, calculates their average scores and
+	 * write them to the averages.txt file.
+	 */
 	private void processingScores() {
 		BufferedReader scores = null;
-		PrintWriter avereges = null;
+		PrintWriter averages = null;
 
 		try {
+			// Open the files
 			scores = new BufferedReader(new FileReader("details.txt"));
-			avereges = new PrintWriter("averages.txt");
+			averages = new PrintWriter("averages.txt");
+
+			// Parse all the candidates' scores, calculate the average, then display and save the results
 			while (scores.ready()) {
 				String[] candidate = scores.readLine().split(" ");
 				String firstName = candidate[0];
@@ -273,9 +280,12 @@ public class Files {
 				String out = String.format("%1s, %2s: Average score is %3.2f.", lastName, firstName, average);
 				// Write to screen and output file
 				System.out.println(out);
-				avereges.println(out);
+				averages.println(out);
 			}
-		} catch (FileNotFoundException e) {
+		}
+
+		// Catch the errors
+		catch (FileNotFoundException e) {
 			System.out.println("File is not exist or cannot be opened: " + e.getMessage());
 		} catch (SecurityException e) {
 			System.out.println("Access denied: " + e.getMessage());
@@ -283,7 +293,10 @@ public class Files {
 			System.out.println("Error while file reading: " + e.getMessage());
 		} catch (NumberFormatException e) {
 			System.out.println("Error with parsing integer: " + e.getMessage());
-		} finally {
+		}
+
+		// Close the files
+		finally {
 			if (scores != null) {
 				try {
 					scores.close();
@@ -291,8 +304,8 @@ public class Files {
 					System.out.println("Error while closing file: " + e.getMessage());
 				}
 			}
-			if (avereges != null) {
-				avereges.close();
+			if (averages != null) {
+				averages.close();
 			}
 		}
 	}
