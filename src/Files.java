@@ -30,33 +30,63 @@ public class Files {
 	public static void main(String[] args) {
 		Files files = new Files();
 		Scanner in = new Scanner(System.in);
-		files.runFilesTest(in);
+		files.run(in);
 		// Close system input after the end of running
 		in.close();
 	}
 
 	/**
-	 * Test how the Files class works.
+	 * Display options to the user and execute program functions according to their commands.
 	 */
-    private void runFilesTest(Scanner in) {
-//	    // Read files
-//		String text = askForFile(in);
-//		if (!text.isEmpty()) {
-//			System.out.println("The content of the file:");
-//			System.out.println(text);
-//		}
-
-//        // Write to files
-//        writeToFile(in);
-
-//		// Copy files
-//		copyFile(in);
-
-//		// Decipher file
-//		decipherFile();
-
-		// Calculate competitor's average scores:
-		processingScores();
+    private void run(Scanner in) {
+    	boolean run = true;
+		while (run) {
+			System.out.println("Chose a function: ");
+			System.out.println("1) Read a file");
+			System.out.println("2) Write to a file");
+			System.out.println("3) Copy a file");
+			System.out.println("4) Decipher mystery.txt");
+			System.out.println("5) Calculate the average scores of the competition's candidates");
+			System.out.println("0) Exit the program");
+			int command;
+			try {
+				command = Integer.parseInt(in.next());
+			} catch (NumberFormatException e) {
+				command = -1;
+			}
+			switch (command) {
+				case 1:
+					// Read files
+					String fileName = askForFile(in);
+					if (!fileName.isEmpty()) {
+						System.out.println("The content of the file:");
+						System.out.println(fileName);
+					}
+					break;
+				case 2:
+					// Write to files
+					writeToFile(in);
+					break;
+				case 3:
+					// Copy files
+					copyFile(in);
+					break;
+				case 4:
+					// Decipher file
+					decipherFile();
+					break;
+				case 5:
+					// Calculate competition's average scores
+					processingScores();
+					break;
+				case 0:
+					// Exit the program
+					run = false;
+					break;
+				default:
+					System.out.println("Not a valid command!\n");
+			}
+		}
 	}
 	
 	/**
