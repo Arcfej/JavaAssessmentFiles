@@ -40,6 +40,7 @@ public class Files {
 	 */
     private void run(Scanner in) {
     	boolean run = true;
+		int command;
 		while (run) {
 			System.out.println("Chose a function: ");
 			System.out.println("1) Read a file");
@@ -48,9 +49,8 @@ public class Files {
 			System.out.println("4) Decipher mystery.txt");
 			System.out.println("5) Calculate the average scores of the competition's candidates");
 			System.out.println("0) Exit the program");
-			int command;
 			try {
-				command = Integer.parseInt(in.next());
+				command = Integer.parseInt(in.nextLine());
 			} catch (NumberFormatException e) {
 				command = -1;
 			}
@@ -98,7 +98,7 @@ public class Files {
 	private String askForFile(Scanner in) {
 		System.out.println("Which text file would you like to open?");
 		// Load the file with the given filename and return it.
-		return loadTextFile(in.next());
+		return loadTextFile(in.nextLine());
 	}
 	
 	/**
@@ -174,9 +174,9 @@ public class Files {
 		try {
 			// Get the filenames from the user.
 			System.out.println("Which file do you like to copy?");
-			from = new BufferedReader(new FileReader(in.next()));
+			from = new BufferedReader(new FileReader(in.nextLine()));
 			System.out.println("What should be the filename of the new copy?");
-			to = new PrintWriter(in.next());
+			to = new PrintWriter(in.nextLine());
 
 			// Read every lines from the original file and display them to the user
 			// while writing them to the new file.
