@@ -88,6 +88,17 @@ public class Files {
 			}
 		}
 	}
+
+	/**
+	 * Check if the file at the given path is readable or not.
+	 *
+	 * @param path of the file to check.
+	 * @return true if the file can be read.
+	 */
+	private boolean isReadable(String path) {
+		File file = new File(path);
+		return file.canRead();
+	}
 	
 	/**
 	 * Ask a filename from the user and return the content of that file if it exists.
@@ -98,7 +109,12 @@ public class Files {
 	private String askForFile(Scanner in) {
 		System.out.println("Which text file would you like to open?");
 		// Load the file with the given filename and return it.
-		return loadTextFile(in.nextLine());
+		String fileName = in.nextLine();
+		if (isReadable(fileName)) {
+			return loadTextFile(fileName);
+		} else {
+			return "The file cannot be read!";
+		}
 	}
 	
 	/**
@@ -174,7 +190,12 @@ public class Files {
 		try {
 			// Get the filenames from the user.
 			System.out.println("Which file do you like to copy?");
-			from = new BufferedReader(new FileReader(in.nextLine()));
+			String origin = in.nextLine();
+			if (!isReadable(origin)) {
+				System.out.println("File cannot be read!");
+				return;
+			}
+			from = new BufferedReader(new FileReader(origin));
 			System.out.println("What should be the filename of the new copy?");
 			to = new PrintWriter(in.nextLine());
 
@@ -211,6 +232,10 @@ public class Files {
 	 * Decipher the mystery.txt file into deciphered.txt.
 	 */
 	private void decipherFile() {
+		if (!isReadable("mystery.txt")) {
+			System.out.println("The encoded file cannot be read!");
+			return;
+		}
 		BufferedReader mystery = null;
 		PrintWriter deciphered = null;
 
@@ -288,6 +313,10 @@ public class Files {
 	 * write them to the averages.txt file.
 	 */
 	private void processingScores() {
+		if (!isReadable("details.txt")) {
+			System.out.println("The competition scores cannot be read!");
+			return;
+		}
 		BufferedReader scores = null;
 		PrintWriter averages = null;
 
