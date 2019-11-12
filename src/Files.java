@@ -37,6 +37,8 @@ public class Files {
 
 	/**
 	 * Display options to the user and execute program functions according to their commands.
+	 * 
+	 * @param in The input stream through the user type in their commands and lines.
 	 */
     private void run(Scanner in) {
     	boolean run = true;
@@ -48,6 +50,9 @@ public class Files {
 			System.out.println("3) Copy a file");
 			System.out.println("4) Decipher mystery.txt");
 			System.out.println("5) Calculate the average scores of the competition's candidates");
+			System.out.println("6) Write a 2D array to a file");
+			System.out.println("7) Write a Film collection to a file");
+			System.out.println("8) Read a Film collection from a file");
 			System.out.println("0) Exit the program");
 			try {
 				command = Integer.parseInt(in.nextLine());
@@ -78,6 +83,16 @@ public class Files {
 				case 5:
 					// Calculate competition's average scores
 					processingScores();
+					break;
+				case 6:
+					// Write a 2D array to a file
+					save2DArray(new Integer[][] {{2, 5, 6, 896}, {}, {987, 6, 6, 6, 6, 6, 89}, {4, 76, 6}});
+					break;
+				case 7:
+					saveFilms(new Film[] {new Film("a", "b", 56, 56), new Film("b", "c", 89, 89)});
+					break;
+				case 8:
+					reloadFilms();
 					break;
 				case 0:
 					// Exit the program
@@ -274,7 +289,7 @@ public class Files {
 	}
 
 	/**
-	 * Method to encipher and decipher a given String using parallel arrays (crypt1 & crypt2)
+	 * Method to encipher and decipher a given String using parallel arrays (crypt1 {@literal @} crypt2)
 	 *
 	 * @param text A String containing text that is to be enciphered or deciphered
 	 * @return A new String containing the result, e.g. the en/deciphered version of the String provided as an input
@@ -365,6 +380,89 @@ public class Files {
 			}
 			if (averages != null) {
 				averages.close();
+			}
+		}
+	}
+	
+	/**
+	 * Save a given two dimensional array into arrays.txt.
+	 * 
+	 * @param <T> The type of the array.
+	 * @param array The array to save.
+	 */
+	private <T> void save2DArray(T[][] array) {
+		final String USER_INPUT_FILE_PATH = "arrays.txt";
+
+        // Try open or create a new file for writing
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(USER_INPUT_FILE_PATH))) {
+            for (T[] row : array) {
+            	String line = "";
+				for (T item : row) {
+					line = line.concat(item.toString() + ", ");
+				}
+				// Remove the ", " characters from the end of each lines
+				if (line.length() >= 2) writer.println(line.substring(0, line.length() -2));
+				// In case of an empty line (empty array) don't remove the final 2 characters: ", ", because they aren't there 
+				else writer.println(line);
+			}
+        } catch (FileNotFoundException | SecurityException e) {
+            System.out.println("Access denied: " + e.getMessage());
+        }
+	}
+	
+	/**
+	 * Save an array of films to films.txt.
+	 * 
+	 * @param films to be saved
+	 */
+	private void saveFilms(Film[] films) {
+		// Try open or create a new file for writing
+        try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream("films.txt"))) {
+            writer.writeObject(films);
+        } catch (FileNotFoundException | SecurityException e) {
+            System.out.println("Access denied: " + e.getMessage());
+        } catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Reload the films from films.txt and display them.
+	 */
+	private void reloadFilms() {
+		if (!isReadable("films.txt")) {
+			System.out.println("The films cannot be read!");
+			return;
+		}
+		ObjectInputStream films = null;
+
+		try {
+			// Open the file
+			films = new ObjectInputStream(new FileInputStream("films.txt"));
+
+			Film[] filmArray = (Film[]) films.readObject();
+			for (Film film : filmArray) {
+				System.out.println(film.toString());
+			}
+		}
+
+		// Catch the errors
+		catch (FileNotFoundException e) {
+			System.out.println("File is not exist or cannot be opened: " + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Error while file reading: " + e.getMessage());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		// Close the file
+		finally {
+			if (films != null) {
+				try {
+					films.close();
+				} catch (IOException e) {
+					System.out.println("Error while closing file: " + e.getMessage());
+				}
 			}
 		}
 	}
