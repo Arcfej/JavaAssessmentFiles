@@ -89,6 +89,12 @@ public class Files {
 		}
 	}
 
+	/**
+	 * Check if the file at the given path is readable or not.
+	 *
+	 * @param path of the file to check.
+	 * @return true if the file can be read.
+	 */
 	private boolean isReadable(String path) {
 		File file = new File(path);
 		return file.canRead();
