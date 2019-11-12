@@ -48,6 +48,9 @@ public class Files {
 			System.out.println("3) Copy a file");
 			System.out.println("4) Decipher mystery.txt");
 			System.out.println("5) Calculate the average scores of the competition's candidates");
+			System.out.println("6) Write a 2D array to a file");
+			System.out.println("7) Write a Film collection to a file");
+			System.out.println("8) Read a Film collection from a file");
 			System.out.println("0) Exit the program");
 			try {
 				command = Integer.parseInt(in.nextLine());
@@ -78,6 +81,10 @@ public class Files {
 				case 5:
 					// Calculate competition's average scores
 					processingScores();
+					break;
+				case 6:
+					// Write a 2D array to a file
+					save2DArray(new Integer[][] {{2, 5, 6, 896}, {}, {987, 6, 6, 6, 6, 6, 89}, {4, 76, 6}});
 					break;
 				case 0:
 					// Exit the program
@@ -367,5 +374,22 @@ public class Files {
 				averages.close();
 			}
 		}
+	}
+	
+	private <T> void save2DArray(T[][] array) {
+		final String USER_INPUT_FILE_PATH = "arrays.txt";
+
+        // Try open or create a new file for writing
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(USER_INPUT_FILE_PATH))) {
+            for (T[] row : array) {
+            	String line = "";
+				for (T item : row) {
+					line = line.concat(item.toString() + ", ");
+				}
+				writer.println(line.substring(0, line.length() -2));
+			}
+        } catch (FileNotFoundException | SecurityException e) {
+            System.out.println("Access denied: " + e.getMessage());
+        }
 	}
 }
