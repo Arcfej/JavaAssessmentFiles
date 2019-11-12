@@ -37,6 +37,8 @@ public class Files {
 
 	/**
 	 * Display options to the user and execute program functions according to their commands.
+	 * 
+	 * @param in The input stream through the user type in their commands and lines.
 	 */
     private void run(Scanner in) {
     	boolean run = true;
@@ -287,7 +289,7 @@ public class Files {
 	}
 
 	/**
-	 * Method to encipher and decipher a given String using parallel arrays (crypt1 & crypt2)
+	 * Method to encipher and decipher a given String using parallel arrays (crypt1 {@literal @} crypt2)
 	 *
 	 * @param text A String containing text that is to be enciphered or deciphered
 	 * @return A new String containing the result, e.g. the en/deciphered version of the String provided as an input
@@ -425,7 +427,7 @@ public class Files {
 	}
 	
 	/**
-	 * Reload the films from films.txt
+	 * Reload the films from films.txt and display them.
 	 */
 	private void reloadFilms() {
 		if (!isReadable("films.txt")) {

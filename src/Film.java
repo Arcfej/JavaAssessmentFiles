@@ -67,7 +67,7 @@ public class Film implements Serializable {
 	}
 
 	/**
-	 *	@return The {@link https://docs.oracle.com/javase/9/docs/api/java/lang/String.html#String} representation of the class
+	 *	@return The <a href="https://docs.oracle.com/javase/9/docs/api/java/lang/String.html">String</a> representation of the class.
 	 */
 	@Override
 	public String toString() {
